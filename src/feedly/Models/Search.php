@@ -9,12 +9,9 @@ class Search extends FeedlyModel
         return '/v3/search/feeds';
     }
 
-    public function get($input = [])
+    public function get($query, $input = [])
     {
-        if (!isset($input['query'])) {
-            return false;
-        }
-        $query = http_build_query($input);
+        $query = http_build_query(['query' => $query] + $input);
         return $this->getClient()
             ->get($this->getApiBaseUrl() . $this->getEndpoint() . '?' . $query);
     }
